@@ -68,6 +68,11 @@ class DrawerActivity :AppCompatActivity(), NavigationView.OnNavigationItemSelect
         startActivity(intent)
     }
 
+    private fun showGuideActivity(){
+        val intent = Intent(this,GuideActivity().javaClass)
+        startActivity(intent)
+    }
+
     private lateinit var mBottomSheetDialog: BottomSheetDialog
     private fun showBottomSheetDialog(){
         val sheetDialogView = View.inflate(this,R.layout.sheet_dialog,null)
@@ -98,6 +103,10 @@ class DrawerActivity :AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
             R.id.action_login -> {
                 showLoginActivity()
+                return true
+            }
+            R.id.action_guide -> {
+                showGuideActivity()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
