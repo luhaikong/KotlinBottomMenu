@@ -24,11 +24,11 @@ class LoginActivity : AppCompatActivity(){
         toolbar.setNavigationOnClickListener(View.OnClickListener { onBackPressed() })
 
         btn_login.setOnClickListener(View.OnClickListener {
-            doLogin()
+            doLogin(it)
         })
     }
 
-    private fun doLogin(){
+    private fun doLogin(view:View){
         GlobalScope.launch(Dispatchers.Main) {
             val result = login(userName,userPassword)
             //更新ui
