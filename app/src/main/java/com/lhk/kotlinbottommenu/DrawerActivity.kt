@@ -1,5 +1,6 @@
 package com.lhk.kotlinbottommenu
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -27,10 +28,7 @@ class DrawerActivity :AppCompatActivity(), NavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_drawer)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        fab.setOnClickListener(OnFabClickListener(this))
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -73,13 +71,13 @@ class DrawerActivity :AppCompatActivity(), NavigationView.OnNavigationItemSelect
         startActivity(intent)
     }
 
-    private lateinit var mBottomSheetDialog: BottomSheetDialog
+    private var mBottomSheetDialog: BottomSheetDialog? = null
     private fun showBottomSheetDialog(){
         val sheetDialogView = View.inflate(this,R.layout.sheet_dialog,null)
         mBottomSheetDialog = BottomSheetDialog(this)
-        mBottomSheetDialog.setContentView(sheetDialogView)
-        mBottomSheetDialog.setOnDismissListener(DialogInterface.OnDismissListener {  })
-        mBottomSheetDialog.show()
+        mBottomSheetDialog!!.setContentView(sheetDialogView)
+        mBottomSheetDialog!!.setOnDismissListener(DialogInterface.OnDismissListener { mBottomSheetDialog=null })
+        mBottomSheetDialog!!.show()
     }
 
     override fun onBackPressed() {
@@ -109,8 +107,8 @@ class DrawerActivity :AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 showGuideActivity()
                 return true
             }
-            else -> return super.onOptionsItemSelected(item)
         }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -139,4 +137,12 @@ class DrawerActivity :AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return true
     }
 
+    class OnFabClickListener(context: Context): View.OnClickListener {
+        override fun onClick(view: View?) {
+            if (view != null) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+        }
+    }
 }
