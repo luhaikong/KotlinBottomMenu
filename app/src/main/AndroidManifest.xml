@@ -32,6 +32,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".GuideActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".TypeTreeContentListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

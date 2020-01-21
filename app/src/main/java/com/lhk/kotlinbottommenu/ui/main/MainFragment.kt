@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lhk.kotlinbottommenu.R
 import com.lhk.kotlinbottommenu.adapter.MainRvAdapter
+import com.lhk.kotlinbottommenu.entity.Subscriptions
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(),MainRvAdapter.OnItemClickListener {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mAdapter: MainRvAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mRecyclerView: RecyclerView
-    private var mList: MutableList<String> = ArrayList()
+    private var mList: MutableList<Subscriptions> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,11 +33,21 @@ class MainFragment : Fragment() {
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
         mAdapter = MainRvAdapter(mList, this.requireContext())
+        mAdapter.onItemClickListener = this
         mRecyclerView.layoutManager = LinearLayoutManager(this.requireContext())
         mRecyclerView.adapter = mAdapter
-        mainViewModel.list.observe(this, Observer {
+        mainViewModel.setContext(this.requireContext())
+        mainViewModel._list!!.observe(this, Observer {
+            mAdapter.list.clear()
             mAdapter.list.addAll(it)
+            mAdapter.notifyDataSetChanged()
         })
+        mainViewModel.load()
+
         return root
+    }
+
+    override fun onItemClick(subscriptions: Subscriptions, position: Int) {
+        mainViewModel.removeFirst(position)
     }
 }

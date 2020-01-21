@@ -3,7 +3,8 @@ package com.lhk.kotlinbottommenu
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.lhk.kotlinbottommenu.entity.Entity
+import com.lhk.kotlinbottommenu.entity.User
+import com.lhk.kotlinbottommenu.entity.WanResponse
 import com.lhk.kotlinbottommenu.retrofit.ApiRepository
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.*
@@ -38,7 +39,7 @@ class LoginActivity : AppCompatActivity(){
         }
     }
 
-    private suspend fun login(name: String, password: String): Entity.WanResponse<Entity.User> {
+    private suspend fun login(name: String, password: String): WanResponse<User> {
         return withContext(Dispatchers.IO) {
             ApiRepository(this@LoginActivity).login(name, password)
         }

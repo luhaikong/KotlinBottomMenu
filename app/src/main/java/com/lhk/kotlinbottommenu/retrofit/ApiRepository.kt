@@ -1,7 +1,7 @@
 package com.lhk.kotlinbottommenu.retrofit
 
 import android.content.Context
-import com.lhk.kotlinbottommenu.entity.Entity
+import com.lhk.kotlinbottommenu.entity.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -95,11 +95,19 @@ class ApiRepository(context: Context){
         }
     }
 
-    suspend fun login(name: String,password: String): Entity.WanResponse<Entity.User> {
+    suspend fun login(name: String,password: String): WanResponse<User> {
         return retrofit.login(name,password)
     }
 
-    suspend fun treeJson():Entity.WanResponse<MutableList<Entity.TypeTree<Any>>>{
+    suspend fun treeJson(): WanResponse<MutableList<TypeTree>> {
         return retrofit.treeJson()
+    }
+
+    suspend fun listJson(cid:Int):WanResponse<TypeTreeListContent>{
+        return retrofit.listJson(cid)
+    }
+
+    suspend fun wxarticle():WanResponse<MutableList<Subscriptions>>{
+        return retrofit.wxarticle()
     }
 }

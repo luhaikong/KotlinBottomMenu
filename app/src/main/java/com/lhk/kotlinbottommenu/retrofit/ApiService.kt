@@ -1,10 +1,7 @@
 package com.lhk.kotlinbottommenu.retrofit
 
-import com.lhk.kotlinbottommenu.entity.Entity
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import com.lhk.kotlinbottommenu.entity.*
+import retrofit2.http.*
 
 interface ApiService {
     companion object {
@@ -13,8 +10,14 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("/user/login")
-    suspend fun login(@Field("username") username: String, @Field("password") password: String): Entity.WanResponse<Entity.User>
+    suspend fun login(@Field("username") username: String, @Field("password") password: String): WanResponse<User>
 
     @GET("/project/tree/json")
-    suspend fun treeJson():Entity.WanResponse<MutableList<Entity.TypeTree<Any>>>
+    suspend fun treeJson(): WanResponse<MutableList<TypeTree>>
+
+    @GET("/project/list/1/json")
+    suspend fun listJson(@Query("cid") cid:Int):WanResponse<TypeTreeListContent>
+
+    @GET("/wxarticle/chapters/json")
+    suspend fun wxarticle():WanResponse<MutableList<Subscriptions>>
 }

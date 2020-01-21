@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lhk.kotlinbottommenu.R
-import com.lhk.kotlinbottommenu.entity.Entity
+import com.lhk.kotlinbottommenu.entity.TypeTree
 import kotlinx.android.synthetic.main.item_list_home.view.*
 
-class HomeRvAdapter(var list: MutableList<Entity.TypeTree<Any>>, var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeRvAdapter(var list: MutableList<TypeTree>, var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var onItemClickListener:OnItemClickListener?=null
+        set(value) {
+            field = value
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.item_list_home, parent, false)
@@ -23,6 +28,9 @@ class HomeRvAdapter(var list: MutableList<Entity.TypeTree<Any>>, var context: Co
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         viewHolder.itemView.tv_title.text = list[position].name
         viewHolder.itemView.tag = position
+        viewHolder.itemView.setOnClickListener(View.OnClickListener {
+            onItemClickListener!!.onItemClick(list[position],position)
+        })
         when (position % 2) {
             0 -> viewHolder.itemView.setBackgroundColor(context.resources.getColor(R.color.colorAccent))
             else -> viewHolder.itemView.setBackgroundColor(context.resources.getColor(R.color.colorPrimaryDark))
@@ -30,4 +38,8 @@ class HomeRvAdapter(var list: MutableList<Entity.TypeTree<Any>>, var context: Co
     }
 
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    interface OnItemClickListener{
+        fun onItemClick(typeTree: TypeTree, position:Int)
+    }
 }
