@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lhk.kotlinbottommenu.R
+import com.lhk.kotlinbottommenu.entity.Entity
 import kotlinx.android.synthetic.main.item_list_home.view.*
 
-class HomeRvAdapter(var list: MutableList<String>, var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeRvAdapter(var list: MutableList<Entity.TypeTree<Any>>, var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.item_list_home, parent, false)
@@ -20,7 +21,7 @@ class HomeRvAdapter(var list: MutableList<String>, var context: Context) : Recyc
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        viewHolder.itemView.tv_title.text = list[position]
+        viewHolder.itemView.tv_title.text = list[position].name
         viewHolder.itemView.tag = position
         when (position % 2) {
             0 -> viewHolder.itemView.setBackgroundColor(context.resources.getColor(R.color.colorAccent))

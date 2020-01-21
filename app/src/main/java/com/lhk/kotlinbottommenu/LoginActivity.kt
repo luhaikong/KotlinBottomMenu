@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.lhk.kotlinbottommenu.entity.Entity
 import com.lhk.kotlinbottommenu.retrofit.ApiRepository
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class LoginActivity : AppCompatActivity(){
 
@@ -29,7 +26,7 @@ class LoginActivity : AppCompatActivity(){
     }
 
     private fun doLogin(view:View){
-        GlobalScope.launch(Dispatchers.Main) {
+        GlobalScope.launch(Dispatchers.Main+CoroutineName("login")) {
             val result = login(userName,userPassword)
             //更新ui
             if (result.data != null){
@@ -43,7 +40,7 @@ class LoginActivity : AppCompatActivity(){
 
     private suspend fun login(name: String, password: String): Entity.WanResponse<Entity.User> {
         return withContext(Dispatchers.IO) {
-            ApiRepository().login(name, password)
+            ApiRepository(this@LoginActivity).login(name, password)
         }
     }
 }

@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.lhk.kotlinbottommenu.demo.Java
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.drawer_content.*
 
